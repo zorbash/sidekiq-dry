@@ -3,9 +3,11 @@
 module Sidekiq
   module Dry
     module Server
+      # Middleware which instantiates `Dry::Struct` hash arguments
       class DeserializationMiddleware
         def call(_worker, job, _queue)
           job['args'].map! do |arg|
+            # Only mutate Dry::Struct hashes
             next arg unless struct?(arg)
 
             to_struct(arg)
@@ -22,10 +24,6 @@ module Sidekiq
 
         def to_struct(arg)
           arg['_type'].constantize.new(arg.except('_type').symbolize_keys)
-        end
-
-        def constantize(klass)
-          ActiveSupport::Inflector.constantize(klass)
         end
       end
     end

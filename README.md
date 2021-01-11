@@ -1,5 +1,8 @@
 # Sidekiq::Dry
 
+[![Gem version](https://badge.fury.io/rb/sidekiq-dry.png)](http://badge.fury.io/rb/sidekiq-dry)
+[![Build Status](https://travis-ci.org/zorbash/sidekiq-dry.svg?branch=master)](https://travis-ci.org/zorbash/sidekiq-dry)
+
 Gem to provide serialization and deserialization of [Dry::Struct][dry-struct]
 arguments for [Sidekiq][sidekiq] jobs.
 
