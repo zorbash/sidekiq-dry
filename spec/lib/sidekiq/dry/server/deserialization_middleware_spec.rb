@@ -46,5 +46,18 @@ RSpec.describe Sidekiq::Dry::Server::DeserializationMiddleware do
         expect(job).to have_received(:perform).with(integer, string, hash.stringify_keys, struct_param)
       end
     end
+
+    context 'with nested struct' do
+      let(:param) do
+        UserWithAddressParams.new(name: 'Rick', address: { city: 'Seattle', street: 'Smith Road' })
+      end
+
+      it 'deserializes the struct and the nested struct' do
+        UsersJob.perform_async(param)
+        UsersJob.drain
+
+        expect(job).to have_received(:perform).with(param)
+      end
+    end
   end
 end

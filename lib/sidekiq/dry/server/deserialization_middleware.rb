@@ -23,7 +23,7 @@ module Sidekiq
         end
 
         def to_struct(arg)
-          arg['_type'].constantize.new(arg.except('_type').symbolize_keys)
+          arg['_type'].constantize.new(arg.except('_type').deep_symbolize_keys)
         end
       end
     end

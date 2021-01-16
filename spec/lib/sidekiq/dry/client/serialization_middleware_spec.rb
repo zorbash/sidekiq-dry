@@ -68,5 +68,27 @@ RSpec.describe Sidekiq::Dry::Client::SerializationMiddleware do
         end
       end
     end
+
+    context 'with a nested struct' do
+      let(:param) do
+        UserWithAddressParams.new(name: 'Rick', address: { city: 'Seattle', street: 'Smith Road' })
+      end
+
+      it 'serializes the struct parameter as a Hash', :aggregate_failures do
+        Sidekiq::Testing.fake! do
+          UsersJob.perform_async(param)
+
+          expect(UsersJob.jobs.size).to be(1)
+
+          job = UsersJob.jobs.first
+          args = job['args'].first
+
+          expect(job['args'].size).to be(1)
+          expect(args['name']).to eql(param.name)
+          expect(args['address']['city']).to eql(param.address.city)
+          expect(args['address']['street']).to eql(param.address.street)
+        end
+      end
+    end
   end
 end

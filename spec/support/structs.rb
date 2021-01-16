@@ -6,3 +6,11 @@ class UserParams < Dry::Struct
   attribute :id,     Types::Strict::Integer
   attribute :email,  Types::Strict::String
 end
+
+class UserWithAddressParams < Dry::Struct
+  attribute :name, Types::String
+  attribute :address do
+    attribute :city,   Types::String
+    attribute :street, Types::String
+  end
+end
