@@ -6,6 +6,8 @@
 Gem to provide serialization and deserialization of [Dry::Struct][dry-struct]
 arguments for [Sidekiq][sidekiq] jobs.
 
+Read more about this gem [here](https://zorbash.com/post/sidekiq-dry/).
+
 ## Rationale
 
 **Argument Validation**
@@ -127,7 +129,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/sidekiq-dry. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/sidekiq-dry/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/zorbash/sidekiq-dry. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/zorbash/sidekiq-dry/blob/master/CODE_OF_CONDUCT.md).
 
 
 ## License
