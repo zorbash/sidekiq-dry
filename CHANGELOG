@@ -1,0 +1,14 @@
+# Change Log
+All notable changes to this project will be documented in this file.
+This project adheres to [Semantic Versioning](http://semver.org/).
+
+## Unreleased
+
+## [1.1.1] - 2020-02-24
+
+### Changed
+
+* When an exception is raised, the original (before Dry::Struct deserialization) arguments
+  are reset so that other middlewares (think exception reporting) don't have to deal with
+  Dry::Struct.
+
