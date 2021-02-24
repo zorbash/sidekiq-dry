@@ -7,6 +7,21 @@ Sidekiq.configure_client do |config|
   end
 end
 
+# Class to test how the deserialization middleware interacts with
+# other middlewares
+class DummyMiddleware
+  def call(_worker, job, _queue)
+    yield
+  rescue Exception => e
+    report(job)
+  end
+
+  def report(job)
+
+  end
+end
+
 Sidekiq::Testing.server_middleware do |chain|
+  chain.add DummyMiddleware
   chain.add Sidekiq::Dry::Server::DeserializationMiddleware
 end

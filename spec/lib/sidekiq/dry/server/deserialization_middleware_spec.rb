@@ -59,5 +59,26 @@ RSpec.describe Sidekiq::Dry::Server::DeserializationMiddleware do
         expect(job).to have_received(:perform).with(param)
       end
     end
+
+    context 'when an exception is raised by the job' do
+      let(:error_reporting_middleware) { DummyMiddleware.new }
+
+      before do
+        allow(DummyMiddleware).to receive(:new).and_return(error_reporting_middleware)
+        allow(job).to receive(:perform).and_raise('whoops')
+        allow(error_reporting_middleware).to receive(:report)
+      end
+
+      it 'resets the job arguments to their original state' do
+        params = UserParams.new(id: 42, email: 'admin@example.com')
+
+        UsersJob.perform_async(params)
+        UsersJob.drain
+
+        expect(error_reporting_middleware).to have_received(:report) do |job|
+          expect(job['args']).to eq([{ "_type" => "UserParams", "email" => "admin@example.com", "id" => 42 }])
+        end
+      end
+    end
   end
 end

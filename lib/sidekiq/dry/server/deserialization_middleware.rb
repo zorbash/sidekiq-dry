@@ -6,7 +6,9 @@ module Sidekiq
       # Middleware which instantiates `Dry::Struct` hash arguments
       class DeserializationMiddleware
         def call(_worker, job, _queue)
-          job['args'].map! do |arg|
+          original_args = job['args']
+
+          job['args'] = job['args'].map do |arg|
             # Only mutate Dry::Struct hashes
             next arg unless struct?(arg)
 
@@ -14,6 +16,14 @@ module Sidekiq
           end
 
           yield
+        rescue Exception => _ex
+          # Other middlewares will see the Hash arguments
+          # which might be handled more predictably in cases
+          # like exception tracking where the job arguments
+          # commonly get processed to redact sensitive info
+          job['args'] = original_args
+
+          raise
         end
 
         private
