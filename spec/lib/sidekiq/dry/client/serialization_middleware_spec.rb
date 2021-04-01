@@ -90,5 +90,30 @@ RSpec.describe Sidekiq::Dry::Client::SerializationMiddleware do
         end
       end
     end
+
+    context 'when jobs are enqueued in bulk' do
+      let(:param) do
+        UserParams.new(id: 42, email: 'admin@example.com')
+      end
+
+      it 'serializes the struct parameters as a Hash' do
+        Sidekiq::Testing.fake! do
+          Sidekiq::Client.push_bulk(
+            'args' => [[param], [param]],
+            'class' => UsersJob,
+          )
+
+          expect(UsersJob.jobs.size).to be(2)
+
+          job = UsersJob.jobs.first
+          args = job['args'].first
+
+          expect(job['args'].size).to be(1)
+          expect(job['args'].first).to eql('id' => 42,
+                                         'email' => 'admin@example.com',
+                                         '_type' => 'UserParams')
+        end
+      end
+    end
   end
 end
