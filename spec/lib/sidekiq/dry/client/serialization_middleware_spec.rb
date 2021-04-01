@@ -5,6 +5,7 @@ require 'spec_helper'
 RSpec.describe Sidekiq::Dry::Client::SerializationMiddleware do
   describe '#call' do
     before(:each) { Sidekiq::Worker.clear_all }
+    after(:each) { Sidekiq::Worker.clear_all }
 
     context 'with a single struct parameter' do
       it 'serializes a struct parameter as a Hash', :aggregate_failures do
