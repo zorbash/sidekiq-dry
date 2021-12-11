@@ -4,7 +4,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
-## [1.1.1] - 2020-02-24
+## [1.1.2] - 2021-12-11
+
+### Changed
+
+* Bumped sidekiq dependency for CVE-2021-30151
+
+## [1.1.1] - 2021-02-24
 
 ### Changed
 
