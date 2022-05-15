@@ -38,7 +38,7 @@ RSpec.describe Sidekiq::Dry::Server::DeserializationMiddleware do
         struct_param = UserParams.new(id: 42, email: 'admin@example.com')
         integer = 100
         string = 'some'
-        hash = { one: 1, two: 2 }
+        hash = { 'one' => 1, 'two' => 2 }
 
         UsersJob.perform_async(integer, string, hash, struct_param)
         UsersJob.drain
