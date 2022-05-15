@@ -4,6 +4,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [1.1.3] - 2022-05-15
+
+### Changed
+
+* Bumped sidekiq to 6.4.2
+* Stringified args to ensure JSON-compatiblity to fix - Job arguments
+do not serialize to JSON safely. This would have raised an error in
+Sidekiq 7.0.
+
 ## [1.1.2] - 2021-12-11
 
 ### Changed
