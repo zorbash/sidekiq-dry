@@ -13,7 +13,7 @@ module Sidekiq
 
             # Set a `_type` argument to be able to instantiate
             # the struct when the job is performed
-            arg.to_h.merge(_type: arg.class.to_s).deep_stringify_keys
+            arg.to_h.merge(_type: arg.class.to_s).as_json
           end
 
           yield

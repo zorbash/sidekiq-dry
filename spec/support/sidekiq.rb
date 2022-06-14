@@ -1,5 +1,7 @@
 require 'sidekiq/testing'
 
+Sidekiq.strict_args!
+
 # Load all middlewares to be tested
 Sidekiq.configure_client do |config|
   config.client_middleware do |chain|

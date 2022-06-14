@@ -24,6 +24,24 @@ RSpec.describe Sidekiq::Dry::Client::SerializationMiddleware do
       end
     end
 
+    context 'with a struct that contains non-JSON data' do
+      it 'converts the values to JSON' do
+        params = UserParams.new(id: 42, email: 'admin@example.com', start_date: Date.new(2022, 6, 14))
+
+        UsersJob.perform_async(params)
+
+        expect(UsersJob.jobs.size).to be(1)
+
+        job = UsersJob.jobs.first
+
+        expect(job['args'].size).to be(1)
+        expect(job['args'].first).to eql('id' => 42,
+                                         'email' => 'admin@example.com',
+                                         'start_date' => '2022-06-14',
+                                         '_type' => 'UserParams')
+      end
+    end
+
     context 'with multiple struct parameters' do
       it 'serializes each struct parameter as a Hash', :aggregate_failures do
         param_1 = UserParams.new(id: 42, email: 'admin@example.com')
