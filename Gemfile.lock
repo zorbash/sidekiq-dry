@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    sidekiq-dry (1.1.2)
+    sidekiq-dry (1.1.4)
       activesupport
       dry-struct (~> 1.0)
       sidekiq (>= 6.4.2)
@@ -48,7 +48,7 @@ GEM
     pry (0.13.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
-    rack (2.2.3)
+    rack (2.2.3.1)
     rake (12.3.3)
     redis (4.6.0)
     rspec (3.10.0)
@@ -64,7 +64,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.10.0)
     rspec-support (3.10.1)
-    sidekiq (6.4.2)
+    sidekiq (6.5.0)
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
